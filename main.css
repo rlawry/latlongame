@@ -1,0 +1,23 @@
+html,body{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.xyposition{
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    background-color: red;
+    color: white;
+    font-size: 1em;
+    font-size: 3.5vw;
+
+}
