@@ -82,7 +82,7 @@ function convertLat(obj){
 
 function draw() {
 
-
+//
 }
 
 window.addEventListener("resize", function(){loadImage()}, true);
