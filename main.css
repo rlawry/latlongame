@@ -21,3 +21,7 @@ html,body{
     font-size: 3.5vw;
 
 }
+
+.canvas{
+    user-select: none;
+}
