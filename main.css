@@ -1,27 +1,72 @@
 html,body{
     height: 100%;
-    display: flex;
+    
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+    margin: 0px;
 }
 
 .container{
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
-}
+  }
 
 .xyposition{
-    position: absolute;
-    top: 5%;
-    left: 5%;
-    background-color: red;
-    color: white;
-    font-size: 1em;
-    font-size: 3.5vw;
+        user-select: none;
+        caret-color: transparent;
+        pointer-events: none;
+        position: absolute;
+        top: 5%; 
+        left: 5%;
+        
+        font-family: verdana;
+        font-size: 2em;
+        font-weight: 700;
+        color: #231919;
+        text-shadow: 1px 1px 1px #919191,
+            1px 2px 1px #919191,
+            1px 3px 1px #919191,
+            1px 4px 1px #919191,
+            1px 5px 1px #919191,
+            1px 6px 1px #919191,
+            1px 7px 1px #919191,
 
+        1px 1px 6px rgba(16,16,16,0.4),
+        1px 2px 10px rgba(16,16,16,0.2),
+        1px 5px 35px rgba(16,16,16,0.2),
+        1px 10px 60px rgba(16,16,16,0.4);
+}
+
+.game{
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    z-index:3;
+    user-select: none;
+    caret-color: transparent;
+    pointer-events: none;
 }
 
 .canvas{
     user-select: none;
 }
+
+@keyframes flashcorrect {
+    0% {
+        box-shadow: 0px 0px 150px 150px rgb(30, 255, 30);
+        opacity:1;
+    }
+    52% {
+        box-shadow: 0px 0px 10px 15px rgb(111, 255, 128);
+    }
+}
+   
+.flashcorrect {
+    animation-name: flashcorrect;
+    animation-duration: 1500ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}  
