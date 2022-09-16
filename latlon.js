@@ -14,6 +14,9 @@ var yeah = new Audio('yeah.mp3');
 
 var correctArray = [];
 var incorrectArray = [];
+
+var lastClick = 0;
+
 function loadArrays() {
     correctArray.push(new Audio("correct1.mp3"));
     correctArray.push(new Audio("correct2.mp3"));       
@@ -208,22 +211,35 @@ function drawStar(cx,cy,spikes,outerRadius,innerRadius, context){
 }
   
 function checkLocation(canvas, evt){
-    var mousePos = getMousePos(canvas, evt);
-    if(refreshCount>10){refreshImage();}
-    putLeaves(evt);
-    if(mousePos[0] >= targetLat - 3 && mousePos[0] <= targetLat +3 ){
-        if(mousePos[1] >= targetLon - 3 && mousePos[1] <= targetLon +3 ){
-            refreshImage();
-            document.getElementById("message").innerHTML = "Correct in " + tries + " tries.";
-            document.querySelectorAll(".xyposition").forEach(item => {item.classList.add("flashcorrect");});
-            generatePos();
-            tries = 1;
-            putCorrect(evt);
-            var rightSound = Math.floor(Math.random()*correctArray.length);
-            correctArray[rightSound].currentTime = 0;
-            correctArray[rightSound].play();
-            stars++;
-            document.getElementById("stars").innerHTML = stars + " stars";
+    var d = new Date();
+    var t = d.getTime();
+    if(t-lastClick>1000){
+        var mousePos = getMousePos(canvas, evt);
+        if(refreshCount>10){refreshImage();}
+        putLeaves(evt);
+        if(mousePos[0] >= targetLat - 3 && mousePos[0] <= targetLat +3 ){
+            if(mousePos[1] >= targetLon - 3 && mousePos[1] <= targetLon +3 ){
+                refreshImage();
+                document.getElementById("message").innerHTML = "Correct in " + tries + " tries.";
+                document.querySelectorAll(".xyposition").forEach(item => {item.classList.add("flashcorrect");});
+                generatePos();
+                tries = 1;
+                putCorrect(evt);
+                var rightSound = Math.floor(Math.random()*correctArray.length);
+                correctArray[rightSound].currentTime = 0;
+                correctArray[rightSound].play();
+                stars++;
+                document.getElementById("stars").innerHTML = stars + " stars";
+            }
+            else {
+                tries++;
+                refreshCount++;
+                document.getElementById("message").innerHTML = "WRONG.";
+                var wrongSound = Math.floor(Math.random()*incorrectArray.length);
+                incorrectArray[wrongSound].currentTime = 0;
+                incorrectArray[wrongSound].play();
+                document.querySelectorAll(".xyposition").forEach(item => {item.classList.add("flashwrong");});
+            }
         }
         else {
             tries++;
@@ -234,18 +250,10 @@ function checkLocation(canvas, evt){
             incorrectArray[wrongSound].play();
             document.querySelectorAll(".xyposition").forEach(item => {item.classList.add("flashwrong");});
         }
+        lastClick = t;
+        console.log(tries);
     }
-    else {
-        tries++;
-        refreshCount++;
-        document.getElementById("message").innerHTML = "WRONG.";
-        var wrongSound = Math.floor(Math.random()*incorrectArray.length);
-        incorrectArray[wrongSound].currentTime = 0;
-        incorrectArray[wrongSound].play();
-        document.querySelectorAll(".xyposition").forEach(item => {item.classList.add("flashwrong");});
-    }
-    
-    console.log(tries);
+
 }
   
 window.addEventListener("resize", function(){initialize()}, true);
