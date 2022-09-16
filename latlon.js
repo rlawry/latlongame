@@ -9,9 +9,6 @@ var newWidth;
 var newHeight;
 var refreshCount=0;
 
-var bruh = new Audio('bruh.mp3');
-var yeah = new Audio('yeah.mp3');
-
 var correctArray = [];
 var incorrectArray = [];
 
