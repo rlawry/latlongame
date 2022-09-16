@@ -7,6 +7,14 @@ html,body{
     margin: 0px;
 }
 
+img{
+    display:none;
+}
+
+div{
+    padding: 10px;
+}
+
 .container{
     display: block;
     justify-content: center;
@@ -15,11 +23,12 @@ html,body{
 
 .xyposition{
         user-select: none;
+        background-color: rgba(255, 255, 255, 0.363);
         caret-color: transparent;
         pointer-events: none;
         position: absolute;
-        top: 5%; 
-        left: 5%;
+        top: 9%; 
+        left: 6%;
         
         font-family: verdana;
         font-size: 2em;
@@ -41,12 +50,19 @@ html,body{
 
 .game{
     position: absolute;
-    bottom: 5%;
-    left: 50%;
-    transform: translate(-50%, 50%);
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgba(128, 185, 255, 0.571);
+    top: 60%;
+    right: 10%;
+    width: 20%;
+    height: 10%;
+    font-weight: 600;
+    text-shadow: 2px 2px 2px white;
     z-index:3;
     user-select: none;
     caret-color: transparent;
+    pointer-events: none;
+    padding: 0.5%;
     pointer-events: none;
 }
 
@@ -56,11 +72,11 @@ html,body{
 
 @keyframes flashcorrect {
     0% {
-        box-shadow: 0px 0px 150px 150px rgb(30, 255, 30);
+        color: rgb(30, 255, 30);
         opacity:1;
     }
     52% {
-        box-shadow: 0px 0px 10px 15px rgb(111, 255, 128);
+        color: rgb(7, 54, 13);
     }
 }
    
@@ -68,5 +84,22 @@ html,body{
     animation-name: flashcorrect;
     animation-duration: 1500ms;
     animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}  
+
+@keyframes flashwrong {
+    0% {
+        color: #dc143c;
+        opacity:1;
+    }
+    77% {
+        color: #430101;
+    }
+}
+
+.flashwrong {
+    animation-name: flashwrong;
+    animation-duration: 900ms;
+    animation-iteration-count: 0.5;
     animation-timing-function: ease-in-out;
 }  

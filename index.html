@@ -4,10 +4,15 @@
     <head>
         <title>Latitude Longitude Game</title>
     </head>
+    <img src="worldmap.png" class="base-img">
+    <audio preload="auto"></audio>
     <body>
         <div class="xyposition" id="target">Find this location:</div>
         <canvas id="platform" width=1366px height=768px></canvas>
-        <div class="game" id="message">Click the correct position.</div>
+        <div class="game">
+            <div id="message">Click the correct position.</div>
+            <div id="stars">0 stars</div>
+        </div>
     </body>
     <script src = "latlon.js"></script>
 </html>

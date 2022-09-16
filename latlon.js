@@ -2,40 +2,83 @@ var canvas = document.getElementById("platform"),
 ctx = canvas.getContext('2d');
 ctx.imageSmoothingEnabled = false;
 
-
-
-loadImage();
-generatePos();
+var tmpCanvas = document.createElement('canvas'),
+tmpCtx = tmpCanvas.getContext('2d');
+var img;
 var newWidth;
 var newHeight;
 var refreshCount=0;
-function loadImage(){
-    var map = new Image();
-    map.src = 'worldmap.png';
-    // canvas.width = 3729 * 0.6;
-    // canvas.height = 2068 * 0.6;    
-    canvas.width = window.innerWidth
+
+var bruh = new Audio('bruh.mp3');
+var yeah = new Audio('yeah.mp3');
+
+var correctArray = [];
+var incorrectArray = [];
+function loadArrays() {
+    correctArray.push(new Audio("correct1.mp3"));
+    correctArray.push(new Audio("correct2.mp3"));       
+    correctArray.push(new Audio("correct3.mp3"));       
+    correctArray.push(new Audio("correct4.mp3"));       
+    correctArray.push(new Audio("correct5.mp3"));       
+    correctArray.push(new Audio("correct6.mp3"));       
+    correctArray.push(new Audio("correct7.mp3"));       
+    correctArray.push(new Audio("correct8.mp3"));                        
+    incorrectArray.push(new Audio("incorrect.mp3"));
+    incorrectArray.push(new Audio("incorrect1.mp3"));  
+    incorrectArray.push(new Audio("incorrect2.mp3"));  
+    incorrectArray.push(new Audio("incorrect3.mp3"));  
+    incorrectArray.push(new Audio("incorrect4.mp3"));  
+    incorrectArray.push(new Audio("incorrect5.mp3"));  
+    incorrectArray.push(new Audio("incorrect6.mp3"));  
+    incorrectArray.push(new Audio("incorrect7.mp3"));  
+    incorrectArray.push(new Audio("incorrect8.mp3"));  
+    incorrectArray.push(new Audio("incorrect9.mp3"));  
+    incorrectArray.push(new Audio("incorrect10.mp3"));  
+    incorrectArray.push(new Audio("incorrect11.mp3"));  
+    incorrectArray.push(new Audio("incorrect12.mp3"));
+    incorrectArray.push(new Audio("incorrect13.mp3"));  
+    incorrectArray.push(new Audio("incorrect14.mp3"));  
+    incorrectArray.push(new Audio("incorrect15.mp3"));  
+    incorrectArray.push(new Audio("incorrect16.mp3"));    
+}
+loadArrays();
+function initialize(){
+    
+    img = new Image();
+    img.src = "worldmap.png";
+    canvas.width = window.innerWidth;
+    console.log(window.innerWidth);
+    console.log(canvas.width);
     canvas.height = window.innerHeight;
     ctx.canvas.width  = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
-   //console.log(window.devicePixelRatio);
+
+    tmpCanvas.width = window.innerWidth
+    tmpCanvas.height = window.innerHeight;
+    tmpCtx.canvas.width  = window.innerWidth;
+    tmpCtx.canvas.height = window.innerHeight;
     var width;
     var height;
-    map.onload = function(){
-        width = this.width;
-        height = this.height;
 
-        var scaleWF = canvas.width/width;
-        var scaleHF = canvas.height/height;
-        //console.log(scaleWF + " scaleWF " + scaleHF + " scaleHF");
-        newWidth = canvas.width;
-        newHeight = scaleWF * height;
-        canvas.height = Math.round(newHeight);
-        //console.log(newHeight + "total height");
-        ctx.drawImage(map, 0, 0, Math.round(newWidth),Math.round(newHeight));
-
-        //console.log(width + "image width and " + canvas.width + " canvas width and " + canvas.height + " canvas height");
-    }
+    img.onload = function() {
+        
+            width = this.width;
+            height = this.height;
+    
+            var scaleWF = canvas.width/width;
+            var scaleHF = canvas.height/height;
+            //console.log(scaleWF + " scaleWF " + scaleHF + " scaleHF");
+            newWidth = Math.round(canvas.width);
+            newHeight = Math.round(scaleWF * height);
+            canvas.height = newHeight;
+            tmpCanvas.height = newHeight;
+            tmpCtx.drawImage(img, 0, 0, newWidth,newHeight);
+            ctx.drawImage(tmpCtx.canvas, 0, 0);
+    };
+    generatePos();
+}
+function refreshImage(){
+    ctx.drawImage(tmpCtx.canvas, 0, 0);
     refreshCount = 0;
 }
 
@@ -92,6 +135,7 @@ function convertLat(obj){
 var targetLat, targetLon;
 var tries = 1;
 var refreshCount=0;
+var stars = 0;
 
 function generatePos() {
     var latPos = Math.random()*90;
@@ -110,7 +154,7 @@ function generatePos() {
     else lonText = targetLon + "&deg;";
     
     console.log(targetLat + " targetLat " + targetLon + " targetLon");
-    document.getElementById("target").innerHTML = "Click Position: " + latText + ", " + lonText;
+    document.getElementById("target").innerHTML = "Find this location: " + latText + ", " + lonText;
 }
 
 var putLeaves = function(e) {
@@ -119,37 +163,100 @@ var putLeaves = function(e) {
     var y = e.clientY - bounds.top;
   
     ctx.beginPath();
+    ctx.lineWidth = 3
     ctx.arc(x,y,10,0,Math.PI*2,false); 
     ctx.strokeStyle ="#000000";
     ctx.stroke();
   }
 
+var putCorrect = function(e){
+    var bounds = e.target.getBoundingClientRect();
+    var x = e.clientX - bounds.left;
+    var y = e.clientY - bounds.top;
+
+    ctx.beginPath();
+    drawStar(x,y,5,4,10,ctx);
+    drawStar(x,y,5,4,10,tmpCtx);
+}
+
+function drawStar(cx,cy,spikes,outerRadius,innerRadius, context){
+    var rot=Math.PI/2*2;
+    var x=cx;
+    var y=cy;
+    var step=Math.PI/spikes;
+
+    context.beginPath();
+    context.moveTo(cx,cy-outerRadius)
+    for(i=0;i<spikes;i++){
+      x=cx+Math.cos(rot)*outerRadius;
+      y=cy+Math.sin(rot)*outerRadius;
+      context.lineTo(x,y)
+      rot+=step
+
+      x=cx+Math.cos(rot)*innerRadius;
+      y=cy+Math.sin(rot)*innerRadius;
+      context.lineTo(x,y)
+      rot+=step
+    }
+    context.lineTo(cx,cy-outerRadius);
+    context.closePath();
+    context.lineWidth=5;
+    context.strokeStyle='blue';
+    context.stroke();
+    context.fillStyle='yellow';
+    context.fill();
+}
+  
 function checkLocation(canvas, evt){
     var mousePos = getMousePos(canvas, evt);
+    if(refreshCount>10){refreshImage();}
     putLeaves(evt);
     if(mousePos[0] >= targetLat - 3 && mousePos[0] <= targetLat +3 ){
         if(mousePos[1] >= targetLon - 3 && mousePos[1] <= targetLon +3 ){
-            loadImage();
+            refreshImage();
             document.getElementById("message").innerHTML = "Correct in " + tries + " tries.";
-            document.querySelectorAll(".target").forEach(item => {item.classList.add("flashcorrect");});
+            document.querySelectorAll(".xyposition").forEach(item => {item.classList.add("flashcorrect");});
             generatePos();
-            tries = 0;
+            tries = 1;
+            putCorrect(evt);
+            var rightSound = Math.floor(Math.random()*correctArray.length);
+            correctArray[rightSound].currentTime = 0;
+            correctArray[rightSound].play();
+            stars++;
+            document.getElementById("stars").innerHTML = stars + " stars";
+        }
+        else {
+            tries++;
+            refreshCount++;
+            document.getElementById("message").innerHTML = "WRONG.";
+            var wrongSound = Math.floor(Math.random()*incorrectArray.length);
+            incorrectArray[wrongSound].currentTime = 0;
+            incorrectArray[wrongSound].play();
+            document.querySelectorAll(".xyposition").forEach(item => {item.classList.add("flashwrong");});
         }
     }
     else {
         tries++;
         refreshCount++;
         document.getElementById("message").innerHTML = "WRONG.";
+        var wrongSound = Math.floor(Math.random()*incorrectArray.length);
+        incorrectArray[wrongSound].currentTime = 0;
+        incorrectArray[wrongSound].play();
+        document.querySelectorAll(".xyposition").forEach(item => {item.classList.add("flashwrong");});
     }
-    if(refreshCount>10){loadImage();}
+    
     console.log(tries);
 }
   
-window.addEventListener("resize", function(){loadImage()}, true);
+window.addEventListener("resize", function(){initialize()}, true);
 
-document.addEventListener("DOMContentLoaded", addListenForClear);
+document.addEventListener("DOMContentLoaded", function(){
+    addListenForClear();
+    initialize();
+});
+
 function addListenForClear(){
-    var place = document.getElementById("xyposition");
+    var place = document.getElementById("target");
     var clearIt = function() {
        place.classList.remove("flashwrong");
        place.classList.remove("flashcorrect");
