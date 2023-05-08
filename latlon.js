@@ -25,21 +25,16 @@ function loadArrays() {
     correctArray.push(new Audio("correct8.mp3"));                        
     incorrectArray.push(new Audio("incorrect.mp3"));
     incorrectArray.push(new Audio("incorrect1.mp3"));  
-    incorrectArray.push(new Audio("incorrect2.mp3"));  
-    incorrectArray.push(new Audio("incorrect3.mp3"));  
+    incorrectArray.push(new Audio("incorrect2.mp3"));   
     incorrectArray.push(new Audio("incorrect4.mp3"));  
-    incorrectArray.push(new Audio("incorrect5.mp3"));  
-    incorrectArray.push(new Audio("incorrect6.mp3"));  
+    incorrectArray.push(new Audio("incorrect5.mp3"));    
     incorrectArray.push(new Audio("incorrect7.mp3"));  
     incorrectArray.push(new Audio("incorrect8.mp3"));  
     incorrectArray.push(new Audio("incorrect9.mp3"));  
     incorrectArray.push(new Audio("incorrect10.mp3"));  
-    incorrectArray.push(new Audio("incorrect11.mp3"));  
     incorrectArray.push(new Audio("incorrect12.mp3"));
     incorrectArray.push(new Audio("incorrect13.mp3"));  
-    incorrectArray.push(new Audio("incorrect14.mp3"));  
-    incorrectArray.push(new Audio("incorrect15.mp3"));  
-    incorrectArray.push(new Audio("incorrect16.mp3"));    
+    incorrectArray.push(new Audio("incorrect14.mp3"));   
 }
 loadArrays();
 function initialize(){
